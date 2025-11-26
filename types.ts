@@ -32,4 +32,12 @@ export interface AISettings {
   openAIUrl: string;
   openAIKeys: string; // Comma separated
   openAIModel: string;
+  // Firebase Configuration
+  firebaseApiKey?: string;
+  firebaseAuthDomain?: string;
+  firebaseProjectId?: string;
+  firebaseStorageBucket?: string;
+  firebaseMessagingSenderId?: string;
+  firebaseAppId?: string;
+  firebaseMeasurementId?: string; // Optional, only if GA is used
 }

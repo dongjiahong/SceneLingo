@@ -1,0 +1,40 @@
+<svg
+  viewBox="0 0 32 32"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-label="SceneLingo Logo"
+>
+  <defs>
+    <linearGradient id="logo_gradient" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stopColor="#6366f1" />
+      <stop offset="100%" stopColor="#4338ca" />
+    </linearGradient>
+  </defs>
+
+  <path
+    d="M4 10C4 6.68629 6.68629 4 10 4H22C25.3137 4 28 6.68629 28 10V20C28 23.3137 25.3137 26 22 26H10C9.2 26 8 26.5 6 28.5V24C4.89543 24 4 23.1046 4 22V10Z"
+    fill="url(#logo_gradient)"
+  />
+
+  <circle
+    cx="16"
+    cy="15"
+    r="5.5"
+    stroke="white"
+    strokeWidth="2.5"
+    strokeOpacity="0.9"
+  />
+
+  <circle
+    cx="16"
+    cy="15"
+    r="2"
+    fill="white"
+  />
+
+  <path
+    d="M23 8L23.5 9.5L25 10L23.5 10.5L23 12L22.5 10.5L21 10L22.5 9.5L23 8Z"
+    fill="white"
+    fillOpacity="0.9"
+  />
+</svg>

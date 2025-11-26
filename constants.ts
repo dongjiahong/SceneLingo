@@ -27,6 +27,14 @@ export const DEFAULT_SETTINGS = {
   openAIUrl: 'https://api.openai.com/v1',
   openAIKeys: '',
   openAIModel: 'gpt-4o',
+  // Firebase Configuration
+  firebaseApiKey: '',
+  firebaseAuthDomain: '',
+  firebaseProjectId: '',
+  firebaseStorageBucket: '',
+  firebaseMessagingSenderId: '',
+  firebaseAppId: '',
+  firebaseMeasurementId: '',
 };
 
 export const STORAGE_KEY_SETTINGS = 'scenelingo_settings';

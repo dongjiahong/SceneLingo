@@ -53,10 +53,10 @@ const getRandomKey = (keysStr: string): string | null => {
 
 const callGemini = async (settings: AISettings, textInput: string, imageBase64?: string): Promise<ScenarioAnalysis> => {
   // Priority: User Settings > Env Var
-  const apiKey = getRandomKey(settings.geminiKeys) || process.env.API_KEY;
+  const apiKey = getRandomKey(settings.geminiKeys);
 
   if (!apiKey) {
-    throw new Error("Gemini API Key is missing. Please configure it in settings.");
+    throw new Error("Gemini API Key is missing. Please configure it in user settings.");
   }
 
   const ai = new GoogleGenAI({ apiKey });

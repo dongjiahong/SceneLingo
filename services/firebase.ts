@@ -17,18 +17,14 @@ import {
   serverTimestamp,
   Firestore
 } from 'firebase/firestore';
-import { Scenario, ScenarioAnalysis } from '../types';
+import { Scenario, ScenarioAnalysis, AISettings } from '../types';
+import { DEFAULT_SETTINGS, STORAGE_KEY_SETTINGS } from '../constants';
 import { addScenarioToDB, getScenariosFromDB, deleteScenarioFromDB } from './indexedDB';
 
-// NOTE: In a real environment, these would be populated by process.env variables.
-// For this generated code, we check if they exist.
-const firebaseConfig = {
-  apiKey: process.env.VITE_FIREBASE_API_KEY || "demo-key",
-  authDomain: process.env.VITE_FIREBASE_AUTH_DOMAIN || "demo.firebaseapp.com",
-  projectId: process.env.VITE_FIREBASE_PROJECT_ID || "demo-project",
-  storageBucket: process.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.VITE_FIREBASE_APP_ID
+// Helper to get settings
+const getSettings = (): AISettings => {
+  const saved = localStorage.getItem(STORAGE_KEY_SETTINGS);
+  return saved ? { ...DEFAULT_SETTINGS, ...JSON.parse(saved) } : DEFAULT_SETTINGS;
 };
 
 let app: FirebaseApp | undefined;
@@ -39,10 +35,19 @@ let isDemoMode = false;
 // Initialize Firebase safely
 try {
   if (!getApps().length) {
+    const settings = getSettings();
+    const firebaseConfig = {
+      apiKey: settings.firebaseApiKey,
+      authDomain: settings.firebaseAuthDomain,
+      projectId: settings.firebaseProjectId,
+      storageBucket: settings.firebaseStorageBucket,
+      messagingSenderId: settings.firebaseMessagingSenderId,
+      appId: settings.firebaseAppId,
+      measurementId: settings.firebaseMeasurementId,
+    };
+
     // Only initialize if we have a somewhat valid looking config or want to try
-    // In a real app, we would strictly require env vars.
-    // Here we define a simple check to see if we should fallback to LocalStorage (Demo Mode)
-    if (firebaseConfig.apiKey === "demo-key") {
+    if (!firebaseConfig.apiKey) {
       console.warn("Firebase config missing. Running in IndexedDB Demo Mode.");
       isDemoMode = true;
     } else {
