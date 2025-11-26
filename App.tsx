@@ -7,6 +7,7 @@ import { ScenarioCard } from './components/ScenarioCard';
 import { LoadingOverlay } from './components/LoadingOverlay';
 import { ReviewModal } from './components/ReviewModal';
 import { ConfirmDialog } from './components/ConfirmDialog';
+import { SettingsModal } from './components/SettingsModal';
 import { Scenario, UserState } from './types';
 import { Sparkles } from 'lucide-react';
 
@@ -19,6 +20,7 @@ const App: React.FC = () => {
   // Modal states
   const [reviewScenario, setReviewScenario] = useState<Scenario | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   // 1. Initialize Auth
   useEffect(() => {
@@ -52,21 +54,22 @@ const App: React.FC = () => {
     setLoading(true);
 
     try {
-      // 1. Call Gemini AI
+      // 1. Call AI Service (Gemini or OpenAI based on settings)
       const analysisData = await analyzeScenario(text, imageBase64);
 
-      // 2. Save to Firestore
+      // 2. Save to Firestore/IndexedDB
       await saveScenario(user.uid, analysisData, {
         text,
-        imageUrl: imageBase64 // In a real app, upload to Storage and save URL. Using Base64 for demo simplicity.
+        imageUrl: imageBase64
       });
 
       // 3. Scroll to top is handled by React automatically rendering the new item at top
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error processing scenario:", error);
-      alert("Something went wrong. Please check your API key or connection.");
+      alert(`Error: ${error.message || "Failed to analyze"}. Please check your AI Settings.`);
+      setIsSettingsOpen(true); // Auto-open settings on error
     } finally {
       setLoading(false);
     }
@@ -79,6 +82,8 @@ const App: React.FC = () => {
       await deleteScenario(user.uid, deleteId);
       // Ensure UI updates if relying on manual events (Demo Mode)
       // The subscribeToScenarios callback handles this, but 'await' ensures db op is done.
+      // Small delay to ensure DB transaction clears
+      await new Promise(resolve => setTimeout(resolve, 100));
     } catch (error) {
       console.error("Delete failed", error);
     } finally {
@@ -110,6 +115,7 @@ const App: React.FC = () => {
     <div className="min-h-screen bg-slate-50 font-sans text-slate-800">
       <Header 
         onRandom={handleRandomReview} 
+        onSettings={() => setIsSettingsOpen(true)}
         hasHistory={scenarios.length > 0} 
       />
       
@@ -143,14 +149,18 @@ const App: React.FC = () => {
       
       <InputArea onSend={handleSend} isLoading={loading} />
 
-      {/* Review Modal */}
+      {/* Modals */}
       <ReviewModal 
         scenario={reviewScenario} 
         onClose={() => setReviewScenario(null)} 
         onNext={handleRandomReview}
       />
 
-      {/* Delete Confirmation Dialog */}
+      <SettingsModal 
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+      />
+
       <ConfirmDialog
         isOpen={!!deleteId}
         title="Delete Card"

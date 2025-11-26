@@ -20,3 +20,13 @@ Output Requirements:
 
 // Fallback user ID for demo mode if Firebase is not configured
 export const DEMO_USER_ID = 'demo-user-123';
+
+export const DEFAULT_SETTINGS = {
+  geminiKeys: '',
+  useOpenAI: false,
+  openAIUrl: 'https://api.openai.com/v1',
+  openAIKeys: '',
+  openAIModel: 'gpt-4o',
+};
+
+export const STORAGE_KEY_SETTINGS = 'scenelingo_settings';

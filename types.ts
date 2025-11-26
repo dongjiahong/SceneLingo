@@ -24,3 +24,12 @@ export interface UserState {
   uid: string;
   isAnonymous: boolean;
 }
+
+// AI Configuration Settings
+export interface AISettings {
+  geminiKeys: string; // Comma separated
+  useOpenAI: boolean;
+  openAIUrl: string;
+  openAIKeys: string; // Comma separated
+  openAIModel: string;
+}
