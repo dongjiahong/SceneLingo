@@ -1,0 +1,26 @@
+// Data model for a learning scenario
+export interface Scenario {
+  id: string;
+  createdAt: number;
+  input: {
+    text?: string;
+    imageUrl?: string; // Local preview URL or Storage URL
+  };
+  data: ScenarioAnalysis;
+}
+
+// The structure returned by Gemini AI
+export interface ScenarioAnalysis {
+  chineseTitle: string;
+  mainPhrase: string;
+  ipa: string;
+  explanation: string;
+  exampleSentence: string;
+  relatedVocab: string[];
+}
+
+// User auth state
+export interface UserState {
+  uid: string;
+  isAnonymous: boolean;
+}

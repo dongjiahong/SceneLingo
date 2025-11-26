@@ -1,0 +1,8 @@
+{
+  "name": "SceneLingo",
+  "description": "A scenario-based English learning assistant using multimodal AI to translate real-life contexts into authentic English expressions.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
