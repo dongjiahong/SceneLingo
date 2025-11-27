@@ -85,7 +85,7 @@ export const InputArea: React.FC<InputAreaProps> = ({ onSend, isLoading }) => {
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder=""
-            className="w-full bg-transparent border-0 focus:ring-0 focus:outline-none outline-none p-3 max-h-32 resize-none text-slate-800"
+            className="w-full bg-transparent border-0 focus:ring-0 p-3 max-h-32 resize-none text-slate-800"
             rows={1}
             style={{ minHeight: '48px' }}
             onKeyDown={(e) => {
