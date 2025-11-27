@@ -84,8 +84,8 @@ export const InputArea: React.FC<InputAreaProps> = ({ onSend, isLoading }) => {
           <textarea
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder={previewUrl ? "Add a note (optional)..." : "Describe a scenario (e.g. 'I spilled my coffee')..."}
-            className="w-full bg-transparent border-0 focus:ring-0 p-3 max-h-32 resize-none text-slate-800 placeholder:text-slate-400"
+            placeholder=""
+            className="w-full bg-transparent border-0 focus:ring-0 p-3 max-h-32 resize-none text-slate-800"
             rows={1}
             style={{ minHeight: '48px' }}
             onKeyDown={(e) => {
